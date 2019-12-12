@@ -8,33 +8,33 @@ func threeSum(nums []int) [][]int {
 	var res [][]int
 	sort.Sort(sort.IntSlice(nums))
 	for idx, mid := range nums {
-		left, right := 0, len(nums)-1
-		for left < idx && right > idx {
-			addRes := nums[left] + nums[right]
-			if addRes == -mid {
-				var arr []int
-				arr = append(arr, nums[left])
-				arr = append(arr, mid)
-				arr = append(arr, nums[right])
-				res = append(res, arr)
-				left, right = left+1, right-1
-			} else if addRes < -mid {
-				left++
-			} else if addRes > -mid {
-				right--
+		if idx > 0 && nums[idx] != nums[idx-1] {
+			left, right := 0, len(nums)-1
+			for left < idx && right > idx {
+				addRes := nums[left] + nums[right]
+				if addRes == -mid {
+					var arr []int
+					arr = append(arr, nums[left])
+					arr = append(arr, mid)
+					arr = append(arr, nums[right])
+					res = append(res, arr)
+					for left+1 < idx && nums[left] == nums[left+1] {
+						left++
+					}
+					for right-1 > idx && nums[right] == nums[right-1] {
+						right--
+					}
+					left, right = left+1, right-1
+				} else if addRes < -mid {
+					left++
+				} else if addRes > -mid {
+					right--
+				}
 			}
 		}
 	}
-	preArr := []int{}
-	var res2 [][]int
-	for _, arr := range res {
-		if len(preArr) == len(arr) && preArr[0] == arr[0] && preArr[1] == arr[1] && preArr[2] == arr[2] {
-			continue
-		}
-		res2 = append(res2, arr)
-		preArr = arr
-	}
-	return res2
+
+	return res
 }
 
 func main() {
