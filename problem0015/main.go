@@ -11,6 +11,9 @@ func threeSum(nums []int) [][]int {
 		if idx > 0 && nums[idx] == nums[idx-1] {
 			continue
 		}
+		if nums[idx] > 0 || (idx < len(nums)-1 && nums[idx]+nums[idx+1] > 0) {
+			continue
+		}
 		left, right := idx+1, len(nums)-1
 		for left < right {
 			sum := nums[idx] + nums[left] + nums[right]
